@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Digital Conversion Tool</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000; /* Black background */
+            color: #ffffff; /* White text color */
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ffffff; /* White border */
+            border-radius: 4px;
+            background-color: #1a1a1a; /* Dark gray background */
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); /* White shadow */
+            font-size: 16px;
+            height: 150px; /* Increased height for multi-line input */
+            resize: vertical; /* Allow resizing vertically */
+        }
+
+        textarea:focus {
+            outline: none;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.8); /* Brighter white shadow on focus */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Digital Conversion Tool</h1>
+        <div class="input-group">
+            <label for="input-number">Enter Numbers (one per line):</label>
+            <textarea id="input-number" placeholder="Enter Numbers..." oninput="convertData('number')"></textarea>
+        </div>
+        <div class="input-group">
+            <label for="input-hex">Enter Hex (one per line):</label>
+            <textarea id="input-hex" placeholder="Enter Hex..." oninput="convertData('hex')"></textarea>
+        </div>
+        <div class="input-group">
+            <label for="input-ascii">Enter ASCII (one per line):</label>
+            <textarea id="input-ascii" placeholder="Enter ASCII..." oninput="convertData('ascii')"></textarea>
+        </div>
+    </div>
+
+    <script>
+        function convertData(inputType) {
+            var inputNumber = document.getElementById("input-number").value.trim().split('\n');
+            var inputHex = document.getElementById("input-hex").value.trim().split('\n');
+            var inputAscii = document.getElementById("input-ascii").value.trim().split('\n');
+            inputHex = inputHex.map(hex => {
+                if (hex.startsWith("$")) {
+                    return "0x" + hex.substring(1);
+                }
+                return hex;
+            });
+
+            if (inputType === 'number') {
+                var hexOutput = inputNumber.map(num => "0x" + Number(num).toString(16).toUpperCase()).join('\n');
+                document.getElementById("input-hex").value = hexOutput;
+
+                var asciiOutput = inputNumber.map(num => convertHexToAscii("0x" + Number(num).toString(16).toUpperCase())).join('\n');
+                document.getElementById("input-ascii").value = asciiOutput;
+            } else if (inputType === 'hex') {
+                var numberOutput = inputHex.map(hex => parseInt(hex, 16)).join('\n');
+                document.getElementById("input-number").value = numberOutput;
+
+                var asciiOutput = inputHex.map(hex => convertHexToAscii(hex)).join('\n');
+                document.getElementById("input-ascii").value = asciiOutput;
+            } else if (inputType === 'ascii') {
+                var hexOutput = inputAscii.map(ascii => convertAsciiToHex(ascii)).join('\n');
+                document.getElementById("input-hex").value = hexOutput;
+
+                var numberOutput = inputAscii.map(ascii => parseInt(convertAsciiToHex(ascii).replace("0x", ""), 16)).join('\n');
+                document.getElementById("input-number").value = numberOutput;
+            }
+        }
+
+        function convertHexToAscii(hexString) {
+            var asciiString = "";
+            for (var i = 2; i < hexString.length; i += 2) {
+                var charCode = parseInt(hexString.substr(i, 2), 16);
+                asciiString += String.fromCharCode(charCode);
+            }
+            return asciiString;
+        }
+
+        function convertAsciiToHex(asciiString) {
+            var hexString = "";
+            for (var i = 0; i < asciiString.length; i++) {
+                var charCode = asciiString.charCodeAt(i);
+                hexString += charCode.toString(16).padStart(2, "0");
+            }
+            return "0x" + hexString.toUpperCase();
+        }
+    </script>
+</body>
+</html>
