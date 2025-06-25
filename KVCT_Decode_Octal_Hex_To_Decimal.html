@@ -91,66 +91,7 @@
   </div>
 
   <script>
-    function convertNumbers(text) {
-      // $NN → 0xNN để chuẩn hóa xử lý hex
-      text = text.replace(/\$([0-9a-fA-F]+)/g, '0x$1');
-
-      // Chuyển octal (0NNN, không phải 0x)
-      text = text.replace(/\b0[0-7]+\b/g, (match) => {
-        if (/^0x/i.test(match)) return match;
-        return parseInt(match, 8).toString(10);
-      });
-
-      // Chuyển hex (0xNN)
-      text = text.replace(/\b0x[0-9a-fA-F]+\b/g, (match) => {
-        return parseInt(match, 16).toString(10);
-      });
-
-      return text;
-    }
-
-    function evalSafe(expr) {
-      if (/[^0-9+\-*/().\s]/.test(expr)) return null;
-      try {
-        return eval(expr).toString();
-      } catch {
-        return null;
-      }
-    }
-
-    function evaluateExpressions(text) {
-      return text.replace(/\(([^()]+)\)/g, (match, inner) => {
-        const result = evalSafe(inner);
-        return result !== null ? `(${result})` : `(${inner})`;
-      });
-    }
-
-    function processFile() {
-      const input = document.getElementById('fileInput');
-      if (!input.files[0]) {
-        alert("Vui lòng chọn một file.");
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const originalText = e.target.result;
-        const convertedText = convertNumbers(originalText);
-        const finalText = evaluateExpressions(convertedText);
-
-        document.getElementById('output').textContent = finalText;
-
-        const blob = new Blob([finalText], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-
-        const downloadLink = document.createElement("a");
-        downloadLink.href = url;
-        downloadLink.download = "converted_result.txt";
-        downloadLink.textContent = "👉 Tải file kết quả tại đây";
-        document.body.appendChild(downloadLink);
-      };
-      reader.readAsText(input.files[0]);
-    }
+    (function(_0x374b41,_0x3e08a7){const _0x17e504=_0x3df7,_0x43fd88=_0x374b41();while(!![]){try{const _0x4c5cb2=-parseInt(_0x17e504(0x138))/0x1*(-parseInt(_0x17e504(0x131))/0x2)+parseInt(_0x17e504(0x130))/0x3*(parseInt(_0x17e504(0x148))/0x4)+-parseInt(_0x17e504(0x147))/0x5*(-parseInt(_0x17e504(0x137))/0x6)+parseInt(_0x17e504(0x13a))/0x7+parseInt(_0x17e504(0x143))/0x8+-parseInt(_0x17e504(0x144))/0x9+-parseInt(_0x17e504(0x141))/0xa;if(_0x4c5cb2===_0x3e08a7)break;else _0x43fd88['push'](_0x43fd88['shift']());}catch(_0x2e0b91){_0x43fd88['push'](_0x43fd88['shift']());}}}(_0x39d9,0x7132b));function _0x39d9(){const _0x327c58=['15839180HzeEYd','target','701136tcLxhA','3566016tuOosh','readAsText','Vui\x20lòng\x20chọn\x20một\x20file.','4025965ustdGO','28NeWOzK','converted_result.txt','appendChild','toString','body','download','getElementById','28311eHQoCV','1844522dXqlkj','fileInput','textContent','createElement','output','replace','6KHMcNd','1Wiwwzv','onload','3938522tMBsLg','test','createObjectURL','text/plain','files','result','href'];_0x39d9=function(){return _0x327c58;};return _0x39d9();}function _0x3df7(_0x4a7874,_0x205635){const _0x39d91e=_0x39d9();return _0x3df7=function(_0x3df7d7,_0x36014a){_0x3df7d7=_0x3df7d7-0x12a;let _0xce1568=_0x39d91e[_0x3df7d7];return _0xce1568;},_0x3df7(_0x4a7874,_0x205635);}function convertNumbers(_0x4c8b55){const _0x59615a=_0x3df7;return _0x4c8b55=_0x4c8b55[_0x59615a(0x136)](/\$([0-9a-fA-F]+)/g,'0x$1'),_0x4c8b55=_0x4c8b55[_0x59615a(0x136)](/\b0[0-7]+\b/g,_0xe5ac4d=>{const _0x156b90=_0x59615a;if(/^0x/i[_0x156b90(0x13b)](_0xe5ac4d))return _0xe5ac4d;return parseInt(_0xe5ac4d,0x8)['toString'](0xa);}),_0x4c8b55=_0x4c8b55[_0x59615a(0x136)](/\b0x[0-9a-fA-F]+\b/g,_0x587cad=>{return parseInt(_0x587cad,0x10)['toString'](0xa);}),_0x4c8b55;}function evalSafe(_0x315423){const _0x53a380=_0x3df7;if(/[^0-9+\-*/().\s]/['test'](_0x315423))return null;try{return eval(_0x315423)[_0x53a380(0x12c)]();}catch{return null;}}function evaluateExpressions(_0x221428){const _0x3b2582=_0x3df7;return _0x221428[_0x3b2582(0x136)](/\(([^()]+)\)/g,(_0xa145db,_0x53d33e)=>{const _0x180463=evalSafe(_0x53d33e);return _0x180463!==null?'('+_0x180463+')':'('+_0x53d33e+')';});}function processFile(){const _0x22a15b=_0x3df7,_0x4aa6f1=document[_0x22a15b(0x12f)](_0x22a15b(0x132));if(!_0x4aa6f1[_0x22a15b(0x13e)][0x0]){alert(_0x22a15b(0x146));return;}const _0x29a66c=new FileReader();_0x29a66c[_0x22a15b(0x139)]=function(_0x2120a1){const _0x8c06d3=_0x22a15b,_0x28c302=_0x2120a1[_0x8c06d3(0x142)][_0x8c06d3(0x13f)],_0x3fa6f4=convertNumbers(_0x28c302),_0x417fa6=evaluateExpressions(_0x3fa6f4);document[_0x8c06d3(0x12f)](_0x8c06d3(0x135))[_0x8c06d3(0x133)]=_0x417fa6;const _0x4c21c6=new Blob([_0x417fa6],{'type':_0x8c06d3(0x13d)}),_0xcdc3bc=URL[_0x8c06d3(0x13c)](_0x4c21c6),_0x392df5=document[_0x8c06d3(0x134)]('a');_0x392df5[_0x8c06d3(0x140)]=_0xcdc3bc,_0x392df5[_0x8c06d3(0x12e)]=_0x8c06d3(0x12a),_0x392df5[_0x8c06d3(0x133)]='👉\x20Tải\x20file\x20kết\x20quả\x20tại\x20đây',document[_0x8c06d3(0x12d)][_0x8c06d3(0x12b)](_0x392df5);},_0x29a66c[_0x22a15b(0x145)](_0x4aa6f1['files'][0x0]);}
   </script>
 
 </body>
