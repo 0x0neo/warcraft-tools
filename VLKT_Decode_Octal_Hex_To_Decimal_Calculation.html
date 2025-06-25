@@ -92,72 +92,7 @@
   </div>
 
   <script>
-    function convertNumbers(text) {
-      // $NN → 0xNN để chuẩn hóa xử lý hex
-      text = text.replace(/\$([0-9a-fA-F]+)/g, '0x$1');
-
-      // Chuyển octal (0NNN, không phải 0x)
-      text = text.replace(/\b0[0-7]+\b/g, (match) => {
-        if (/^0x/i.test(match)) return match;
-        return parseInt(match, 8).toString(10);
-      });
-
-      // Chuyển hex (0xNN)
-      text = text.replace(/\b0x[0-9a-fA-F]+\b/g, (match) => {
-        return parseInt(match, 16).toString(10);
-      });
-
-      return text;
-    }
-
-    function evalSafe(expr) {
-      // Chỉ cho phép các ký tự an toàn để tránh thực thi code ngoài
-      if (/[^0-9+\-*/().\s]/.test(expr)) return null;
-      try {
-        return eval(expr).toString();
-      } catch {
-        return null;
-      }
-    }
-
-    function evaluateExpressions(text) {
-      return text.replace(/\(([^()]+)\)/g, (match, inner) => {
-        const result = evalSafe(inner);
-        return result !== null ? `(${result})` : `(${inner})`;
-      });
-    }
-
-    function processFile() {
-      const input = document.getElementById('fileInput');
-      if (!input.files[0]) {
-        alert("Vui lòng chọn một file.");
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const originalText = e.target.result;
-
-        // Bước 1: Chuyển toàn bộ hex và octal sang decimal
-        const convertedText = convertNumbers(originalText);
-
-        // Bước 2: Tính biểu thức trong dấu ngoặc
-        const finalText = evaluateExpressions(convertedText);
-
-        // Hiển thị và chuẩn bị file tải về
-        document.getElementById('output').textContent = finalText;
-
-        const blob = new Blob([finalText], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-
-        const downloadLink = document.createElement("a");
-        downloadLink.href = url;
-        downloadLink.download = "converted_result.txt";
-        downloadLink.textContent = "👉 Tải file kết quả tại đây";
-        document.body.appendChild(downloadLink);
-      };
-      reader.readAsText(input.files[0]);
-    }
+    function _0x215a(){const _0x18ffcf=['test','14401430NXciXn','textContent','createElement','2937456LJDenL','210722socWob','appendChild','Vui\x20lòng\x20chọn\x20một\x20file.','1379cWyUxb','href','body','3376611TjuHCc','3862AzrJjQ','replace','2287624nVUZru','5UbWJoz','download','885VAVYxW','getElementById','text/plain','2982Bainak','createObjectURL','0x$1','files','onload','target','toString','👉\x20Tải\x20file\x20kết\x20quả\x20tại\x20đây'];_0x215a=function(){return _0x18ffcf;};return _0x215a();}(function(_0x425ebd,_0x3702a3){const _0x166c06=_0x34c1,_0x8c8ccc=_0x425ebd();while(!![]){try{const _0x237c8d=-parseInt(_0x166c06(0x82))/0x1+-parseInt(_0x166c06(0x89))/0x2*(parseInt(_0x166c06(0x8e))/0x3)+-parseInt(_0x166c06(0x8b))/0x4*(-parseInt(_0x166c06(0x8c))/0x5)+-parseInt(_0x166c06(0x75))/0x6*(parseInt(_0x166c06(0x85))/0x7)+-parseInt(_0x166c06(0x81))/0x8+-parseInt(_0x166c06(0x88))/0x9+parseInt(_0x166c06(0x7e))/0xa;if(_0x237c8d===_0x3702a3)break;else _0x8c8ccc['push'](_0x8c8ccc['shift']());}catch(_0x236e6d){_0x8c8ccc['push'](_0x8c8ccc['shift']());}}}(_0x215a,0x5f8f4));function _0x34c1(_0x45746a,_0x65fa16){const _0x215af6=_0x215a();return _0x34c1=function(_0x34c1c5,_0x3d2a6c){_0x34c1c5=_0x34c1c5-0x74;let _0x508815=_0x215af6[_0x34c1c5];return _0x508815;},_0x34c1(_0x45746a,_0x65fa16);}function convertNumbers(_0x2a2044){const _0x1e146a=_0x34c1;return _0x2a2044=_0x2a2044['replace'](/\$([0-9a-fA-F]+)/g,_0x1e146a(0x77)),_0x2a2044=_0x2a2044['replace'](/\b0[0-7]+\b/g,_0x22a44a=>{const _0x5d534d=_0x1e146a;if(/^0x/i[_0x5d534d(0x7d)](_0x22a44a))return _0x22a44a;return parseInt(_0x22a44a,0x8)[_0x5d534d(0x7b)](0xa);}),_0x2a2044=_0x2a2044[_0x1e146a(0x8a)](/\b0x[0-9a-fA-F]+\b/g,_0x4412f9=>{const _0x14a463=_0x1e146a;return parseInt(_0x4412f9,0x10)[_0x14a463(0x7b)](0xa);}),_0x2a2044;}function evalSafe(_0x33d511){const _0x4eec1c=_0x34c1;if(/[^0-9+\-*/().\s]/[_0x4eec1c(0x7d)](_0x33d511))return null;try{return eval(_0x33d511)[_0x4eec1c(0x7b)]();}catch{return null;}}function evaluateExpressions(_0x30e649){const _0x3864b8=_0x34c1;return _0x30e649[_0x3864b8(0x8a)](/\(([^()]+)\)/g,(_0x499ba3,_0x617b06)=>{const _0x220952=evalSafe(_0x617b06);return _0x220952!==null?'('+_0x220952+')':'('+_0x617b06+')';});}function processFile(){const _0x18ff8b=_0x34c1,_0x575dea=document[_0x18ff8b(0x8f)]('fileInput');if(!_0x575dea['files'][0x0]){alert(_0x18ff8b(0x84));return;}const _0x57c920=new FileReader();_0x57c920[_0x18ff8b(0x79)]=function(_0x43b50e){const _0x5a13b6=_0x18ff8b,_0x39cf88=_0x43b50e[_0x5a13b6(0x7a)]['result'],_0x5546bf=convertNumbers(_0x39cf88),_0x591581=evaluateExpressions(_0x5546bf);document['getElementById']('output')[_0x5a13b6(0x7f)]=_0x591581;const _0x2014a2=new Blob([_0x591581],{'type':_0x5a13b6(0x74)}),_0x315487=URL[_0x5a13b6(0x76)](_0x2014a2),_0x5bbc5e=document[_0x5a13b6(0x80)]('a');_0x5bbc5e[_0x5a13b6(0x86)]=_0x315487,_0x5bbc5e[_0x5a13b6(0x8d)]='converted_result.txt',_0x5bbc5e[_0x5a13b6(0x7f)]=_0x5a13b6(0x7c),document[_0x5a13b6(0x87)][_0x5a13b6(0x83)](_0x5bbc5e);},_0x57c920['readAsText'](_0x575dea[_0x18ff8b(0x78)][0x0]);}
   </script>
 
 </body>
