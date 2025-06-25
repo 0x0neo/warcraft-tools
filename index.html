@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Warcraft tools</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      background-color: #ecf0f1;
+    }
+    .sidebar {
+      width: 260px;
+      background: linear-gradient(180deg, #34495e 0%, #2c3e50 100%);
+      color: white;
+      height: 100vh;
+      box-shadow: 2px 0 8px rgba(0, 0, 0, 0.1);
+      overflow-y: auto;
+    }
+    .menu-item {
+      padding: 16px 20px;
+      cursor: pointer;
+      border-bottom: 1px solid #3e5871;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .menu-item:hover {
+      background-color: #3e5871;
+    }
+    .submenu {
+      background-color: #3e5871;
+      display: none;
+    }
+    .submenu a {
+      display: block;
+      color: white;
+      padding: 12px 35px;
+      text-decoration: none;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+    .submenu a:hover {
+      background-color: #4a6b88;
+    }
+    .content {
+      flex-grow: 1;
+      height: 100vh;
+      padding: 0;
+    }
+    iframe[name="contentFrame"] {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <div class="menu-item" onclick="toggleMenu(this)">VÕ LÂM KỲ TRUYỀN</div>
+    <div class="submenu">
+      <a href="#" onclick="loadContent('index1.html'); return false;">Tool 1</a>
+      <a href="#" onclick="loadContent('index1.html'); return false;">Tool 2</a>
+    </div>
+
+    <div class="menu-item" onclick="toggleMenu(this)">KIẾM VŨ CỬU THIÊN</div>
+    <div class="submenu">
+      <a href="#" onclick="loadContent('index1.html'); return false;">Tool 1</a>
+      <a href="#" onclick="loadContent('index1.html'); return false;">Tool 2</a>
+    </div>
+
+    <div class="menu-item" onclick="toggleMenu(this)">LƯU TINH KIẾM</div>
+    <div class="submenu">
+      <a href="#" onclick="loadContent('index1.html'); return false;">Tool 1</a>
+      <a href="#" onclick="loadContent('index1.html'); return false;">Tool 2</a>
+    </div>
+
+    <div class="menu-item" onclick="toggleMenu(this)">TOOL KHÁC</div>
+    <div class="submenu">
+      <a href="#" onclick="loadContent('index1.html'); return false;">Tool 1</a>
+      <a href="#" onclick="loadContent('index1.html'); return false;">Tool 2</a>
+    </div>
+  </div>
+  <div class="content">
+    <iframe name="contentFrame" src=""></iframe>
+  </div>
+
+  <script>
+    function toggleMenu(clickedItem) {
+      const allSubmenus = document.querySelectorAll('.submenu');
+      const allMenuItems = document.querySelectorAll('.menu-item');
+      allSubmenus.forEach((submenu, index) => {
+        if (allMenuItems[index] === clickedItem) {
+          submenu.style.display = submenu.style.display === 'block' ? 'none' : 'block';
+        } else {
+          submenu.style.display = 'none';
+        }
+      });
+    }
+
+    function loadContent(file) {
+      const iframe = document.querySelector('iframe[name="contentFrame"]');
+      iframe.src = file;
+    }
+  </script>
+</body>
+</html>
