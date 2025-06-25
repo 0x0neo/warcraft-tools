@@ -92,50 +92,7 @@
   </div>
 
   <script>
-    function convertNumbers(content) {
-      // Chuyển HEX 0xNN
-      content = content.replace(/\b0x[0-9a-fA-F]+\b/g, (match) => {
-        return parseInt(match, 16).toString(10);
-      });
-
-      // Chuyển HEX kiểu $NN
-      content = content.replace(/\$[0-9a-fA-F]+\b/g, (match) => {
-        return parseInt(match.slice(1), 16).toString(10);
-      });
-
-      // Chuyển OCTAL kiểu 0NNN (tránh nhầm với 0x)
-      content = content.replace(/\b0[0-7]+\b/g, (match) => {
-        return parseInt(match, 8).toString(10);
-      });
-
-      return content;
-    }
-
-    function processFile() {
-      const input = document.getElementById('fileInput');
-      if (!input.files[0]) {
-        alert("Vui lòng chọn một file.");
-        return;
-      }
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const originalText = e.target.result;
-        const convertedText = convertNumbers(originalText);
-
-        document.getElementById('output').textContent = convertedText;
-
-        const blob = new Blob([convertedText], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-
-        const downloadLink = document.createElement("a");
-        downloadLink.href = url;
-        downloadLink.download = "converted_output.txt";
-        downloadLink.textContent = "👉 Tải file kết quả tại đây";
-        document.body.appendChild(downloadLink);
-      };
-      reader.readAsText(input.files[0]);
-    }
+    (function(_0xef4e5f,_0x2b5861){const _0x28cbc8=_0x40f2,_0x3b4a97=_0xef4e5f();while(!![]){try{const _0x4f9f10=-parseInt(_0x28cbc8(0x97))/0x1+-parseInt(_0x28cbc8(0xac))/0x2*(-parseInt(_0x28cbc8(0x94))/0x3)+parseInt(_0x28cbc8(0xaf))/0x4*(parseInt(_0x28cbc8(0xa6))/0x5)+parseInt(_0x28cbc8(0xad))/0x6*(-parseInt(_0x28cbc8(0x91))/0x7)+-parseInt(_0x28cbc8(0xa3))/0x8*(parseInt(_0x28cbc8(0x92))/0x9)+parseInt(_0x28cbc8(0xa0))/0xa*(-parseInt(_0x28cbc8(0xa1))/0xb)+parseInt(_0x28cbc8(0x9c))/0xc;if(_0x4f9f10===_0x2b5861)break;else _0x3b4a97['push'](_0x3b4a97['shift']());}catch(_0x3eb71c){_0x3b4a97['push'](_0x3b4a97['shift']());}}}(_0x23af,0x61e3d));function convertNumbers(_0x4b7cc5){const _0x5e3350=_0x40f2;return _0x4b7cc5=_0x4b7cc5[_0x5e3350(0x99)](/\b0x[0-9a-fA-F]+\b/g,_0x4cad5e=>{return parseInt(_0x4cad5e,0x10)['toString'](0xa);}),_0x4b7cc5=_0x4b7cc5[_0x5e3350(0x99)](/\$[0-9a-fA-F]+\b/g,_0x597004=>{const _0x461149=_0x5e3350;return parseInt(_0x597004[_0x461149(0xaa)](0x1),0x10)[_0x461149(0xa2)](0xa);}),_0x4b7cc5=_0x4b7cc5[_0x5e3350(0x99)](/\b0[0-7]+\b/g,_0x4c8333=>{const _0x12f41f=_0x5e3350;return parseInt(_0x4c8333,0x8)[_0x12f41f(0xa2)](0xa);}),_0x4b7cc5;}function _0x23af(){const _0x2f626b=['fileInput','331426OWGygL','1086QJsfkX','href','11220gYKrsE','14574GGyBat','36LCruFy','Vui\x20lòng\x20chọn\x20một\x20file.','12Okugdg','👉\x20Tải\x20file\x20kết\x20quả\x20tại\x20đây','files','63810STMFir','download','replace','target','textContent','12273384kVetGx','onload','body','appendChild','10lIdwkQ','7583708hdOHxT','toString','954344UcSPHf','text/plain','getElementById','575vbPdXa','createElement','converted_output.txt','output','slice'];_0x23af=function(){return _0x2f626b;};return _0x23af();}function _0x40f2(_0x4b4665,_0x689583){const _0x23afa7=_0x23af();return _0x40f2=function(_0x40f2ee,_0x53d68e){_0x40f2ee=_0x40f2ee-0x91;let _0x150e87=_0x23afa7[_0x40f2ee];return _0x150e87;},_0x40f2(_0x4b4665,_0x689583);}function processFile(){const _0x184965=_0x40f2,_0x1be08e=document[_0x184965(0xa5)](_0x184965(0xab));if(!_0x1be08e[_0x184965(0x96)][0x0]){alert(_0x184965(0x93));return;}const _0xd66af4=new FileReader();_0xd66af4[_0x184965(0x9d)]=function(_0x5e9e3a){const _0x1d628b=_0x184965,_0x4f5bc7=_0x5e9e3a[_0x1d628b(0x9a)]['result'],_0x98354d=convertNumbers(_0x4f5bc7);document[_0x1d628b(0xa5)](_0x1d628b(0xa9))[_0x1d628b(0x9b)]=_0x98354d;const _0x4227a5=new Blob([_0x98354d],{'type':_0x1d628b(0xa4)}),_0x16325a=URL['createObjectURL'](_0x4227a5),_0x261d29=document[_0x1d628b(0xa7)]('a');_0x261d29[_0x1d628b(0xae)]=_0x16325a,_0x261d29[_0x1d628b(0x98)]=_0x1d628b(0xa8),_0x261d29['textContent']=_0x1d628b(0x95),document[_0x1d628b(0x9e)][_0x1d628b(0x9f)](_0x261d29);},_0xd66af4['readAsText'](_0x1be08e[_0x184965(0x96)][0x0]);}
   </script>
 
 </body>
