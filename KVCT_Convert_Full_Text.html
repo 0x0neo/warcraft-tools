@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Blz Tooltip Finder & Replacer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1e1e2f;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 40px 20px;
+    }
+
+    .container {
+      background-color: #2c2c3c;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h2, h3 {
+      text-align: center;
+      color: #ffffff;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 500;
+    }
+
+    input[type="file"] {
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 16px;
+      border: 1px solid #444;
+      border-radius: 8px;
+      background-color: #1f1f2f;
+      color: #f5f5f5;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin: 10px 10px 20px 0;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    pre {
+      background: #1a1a28;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      font-family: Consolas, monospace;
+      color: #dcdcdc;
+      max-height: 500px;
+      overflow: auto;
+    }
+
+    .btn-group {
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Tìm kiếm BlzGetAbilityExtendedTooltip trong file war3map.j và thay thế bằng chuỗi trong file CampaignAbilityStrings.txt</h2>
+
+    <label>File <code>war3map.j</code>:</label>
+    <input type="file" id="tooltipFile" accept=".txt,.j">
+
+    <label>File chứa <code>CampaignAbilityStrings.txt</code>:</label>
+    <input type="file" id="ubtipFile" accept=".txt">
+
+    <div class="btn-group">
+      <button onclick="processFiles()">Tìm kiếm</button>
+      <button onclick="replaceAndExport()">Thay thế & Tải file <code>converted_war3map.j</code></button>
+    </div>
+
+    <h3>Kết quả tìm được:</h3>
+    <pre id="output">...</pre>
+  </div>
+
+<script>
+// Chuyển số decimal thành ASCII (4 byte)
+function decimalToAscii(num) {
+  let asciiString = "";
+  for (let i = 3; i >= 0; i--) {
+    const byte = (num >> (8 * i)) & 0xFF;
+    asciiString += String.fromCharCode(byte);
+  }
+  return asciiString;
+}
+
+// Cắt chuỗi có thể chứa dấu ngoặc kép
+function splitWithQuotes(str) {
+  const regex = /"([^"]*)"|[^,]+/g;
+  const matches = [];
+  let match;
+  while ((match = regex.exec(str)) !== null) {
+    matches.push(match[1] !== undefined ? match[1] : match[0].trim());
+  }
+  return matches.filter(s => s !== '');
+}
+
+// Dữ liệu toàn cục
+let originalTooltipContent = '';
+let ubertipMap = {};
+
+// Đọc file và tìm tooltip
+function processFiles() {
+  const tooltipFile = document.getElementById('tooltipFile').files[0];
+  const ubtipFile = document.getElementById('ubtipFile').files[0];
+  const output = document.getElementById('output');
+  output.textContent = 'Đang xử lý...';
+
+  if (!tooltipFile || !ubtipFile) {
+    alert('Vui lòng chọn cả hai file.');
+    return;
+  }
+
+  Promise.all([tooltipFile.text(), ubtipFile.text()])
+    .then(([tooltipContent, ubtipContent]) => {
+      originalTooltipContent = tooltipContent;
+
+      // Đọc file Ubertip
+      const lines = ubtipContent.split('\n');
+      let currentKey = '';
+      for (let line of lines) {
+        const matchKey = line.match(/^\[(.+?)\]/);
+        if (matchKey) {
+          currentKey = matchKey[1].trim();
+        } else if (line.includes('Ubertip=') && currentKey) {
+          ubertipMap[currentKey] = line.split('Ubertip=')[1].trim();
+        }
+      }
+
+      // Tìm các dòng BlzGetAbilityExtendedTooltip
+      const regex = /BlzGetAbilityExtendedTooltip\((\d+),\s*(\d+)\)/g;
+      const tooltipMatches = new Set();
+      let match;
+
+      while ((match = regex.exec(tooltipContent)) !== null) {
+        const [fullMatch, idStr, indexStr] = match;
+        const id = parseInt(idStr, 10);
+        const index = parseInt(indexStr, 10);
+        const asciiId = decimalToAscii(id);
+        if (asciiId && ubertipMap[asciiId]) {
+          tooltipMatches.add(JSON.stringify({
+            fullMatch,
+            id: asciiId,
+            index: index
+          }));
+        }
+      }
+
+      // Hiển thị kết quả
+      const results = [];
+      for (let json of tooltipMatches) {
+        const item = JSON.parse(json);
+        const { fullMatch, id, index } = item;
+        const ubertip = ubertipMap[id];
+        const parts = splitWithQuotes(ubertip);
+        const value = parts[index]?.trim();
+        if (value) {
+          results.push(`${fullMatch} = ${value}`);
+        }
+      }
+
+      output.textContent = results.length ? results.join('\n') : 'Không tìm thấy kết quả.';
+    });
+}
+
+// Thay thế và xuất file mới
+function replaceAndExport() {
+  if (!originalTooltipContent || Object.keys(ubertipMap).length === 0) {
+    alert("Hãy nhấn nút 'Tìm kiếm' trước khi thay thế!");
+    return;
+  }
+
+  const regex = /BlzGetAbilityExtendedTooltip\((\d+),\s*(\d+)\)/g;
+  const replaced = originalTooltipContent.replace(regex, (match, idStr, indexStr) => {
+    const id = parseInt(idStr, 10);
+    const index = parseInt(indexStr, 10);
+    const asciiId = decimalToAscii(id);
+    const ubertip = ubertipMap[asciiId];
+    if (ubertip) {
+      const parts = splitWithQuotes(ubertip);
+      const value = parts[index]?.trim();
+      if (value) return `"${value}"`;
+    }
+    return match;
+  });
+
+  const blob = new Blob([replaced], { type: "text/plain" });
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "time_war3map.j";
+  link.click();
+}
+</script>
+
+</body>
+</html>

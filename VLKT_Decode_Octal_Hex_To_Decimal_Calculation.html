@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chuyển Hex, Octal và Biểu thức về Decimal</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1e1e2f;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 40px 20px;
+    }
+
+    .container {
+      background-color: #2c2c3c;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ffffff;
+    }
+
+    input[type="file"] {
+      display: block;
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 16px;
+      border: 1px solid #444;
+      border-radius: 8px;
+      background-color: #1f1f2f;
+      color: #f5f5f5;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: block;
+      margin: 0 auto 20px auto;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    pre#output {
+      background: #1a1a28;
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid #444;
+      font-family: Consolas, monospace;
+      color: #dcdcdc;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    a {
+      color: #00bfff;
+      text-align: center;
+      display: block;
+      margin-top: 15px;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Chuyển đổi Hex / Octal → Decimal và Tính biểu thức</h2>
+    <input type="file" id="fileInput" accept=".txt,.j">
+    <button onclick="processFile()">Chuyển đổi và Tải về</button>
+    <pre id="output"></pre>
+  </div>
+
+  <script>
+    function convertNumbers(text) {
+      // $NN → 0xNN để chuẩn hóa xử lý hex
+      text = text.replace(/\$([0-9a-fA-F]+)/g, '0x$1');
+
+      // Chuyển octal (0NNN, không phải 0x)
+      text = text.replace(/\b0[0-7]+\b/g, (match) => {
+        if (/^0x/i.test(match)) return match;
+        return parseInt(match, 8).toString(10);
+      });
+
+      // Chuyển hex (0xNN)
+      text = text.replace(/\b0x[0-9a-fA-F]+\b/g, (match) => {
+        return parseInt(match, 16).toString(10);
+      });
+
+      return text;
+    }
+
+    function evalSafe(expr) {
+      // Chỉ cho phép các ký tự an toàn để tránh thực thi code ngoài
+      if (/[^0-9+\-*/().\s]/.test(expr)) return null;
+      try {
+        return eval(expr).toString();
+      } catch {
+        return null;
+      }
+    }
+
+    function evaluateExpressions(text) {
+      return text.replace(/\(([^()]+)\)/g, (match, inner) => {
+        const result = evalSafe(inner);
+        return result !== null ? `(${result})` : `(${inner})`;
+      });
+    }
+
+    function processFile() {
+      const input = document.getElementById('fileInput');
+      if (!input.files[0]) {
+        alert("Vui lòng chọn một file.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const originalText = e.target.result;
+
+        // Bước 1: Chuyển toàn bộ hex và octal sang decimal
+        const convertedText = convertNumbers(originalText);
+
+        // Bước 2: Tính biểu thức trong dấu ngoặc
+        const finalText = evaluateExpressions(convertedText);
+
+        // Hiển thị và chuẩn bị file tải về
+        document.getElementById('output').textContent = finalText;
+
+        const blob = new Blob([finalText], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+
+        const downloadLink = document.createElement("a");
+        downloadLink.href = url;
+        downloadLink.download = "converted_result.txt";
+        downloadLink.textContent = "👉 Tải file kết quả tại đây";
+        document.body.appendChild(downloadLink);
+      };
+      reader.readAsText(input.files[0]);
+    }
+  </script>
+
+</body>
+</html>

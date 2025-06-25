@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Chuyển đổi BlzGetAbilityExtendedTooltip</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #1e1e2f;
+      color: #e0e0e0;
+      margin: 0;
+      padding: 40px 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: #2c2c3c;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+
+    h2 {
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 25px;
+    }
+
+    input[type="file"] {
+      display: block;
+      width: 100%;
+      padding: 10px 12px;
+      font-size: 16px;
+      border: 1px solid #444;
+      border-radius: 8px;
+      background-color: #1f1f2f;
+      color: #f5f5f5;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+    }
+
+    textarea {
+      width: 48%;
+      height: 300px;
+      font-family: Consolas, monospace;
+      font-size: 14px;
+      background-color: #1a1a28;
+      color: #dcdcdc;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 10px;
+      box-sizing: border-box;
+      resize: none;
+      display: inline-block;
+      vertical-align: top;
+    }
+
+    .textarea-wrapper {
+      display: flex;
+      justify-content: space-between;
+      gap: 4%;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      display: block;
+      margin: 0 auto;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    @media (max-width: 768px) {
+      .textarea-wrapper {
+        flex-direction: column;
+      }
+      textarea {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Chuẩn hoá BlzGetAbilityExtendedTooltip trong file war3map.j</h2>
+    <input type="file" id="fileInput" accept=".txt,.j">
+
+    <div class="textarea-wrapper">
+      <textarea id="originalText" placeholder="Các dòng tìm thấy..." readonly></textarea>
+      <textarea id="convertedText" placeholder="Kết quả sau khi xử lý..." readonly></textarea>
+    </div>
+
+    <button onclick="downloadConverted()">Tải file kết quả</button>
+  </div>
+
+  <script>
+    let convertedContent = "";
+
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const content = e.target.result;
+        const regex = /BlzGetAbilityExtendedTooltip\(\s*(\(?\d+\)?)\s*,\s*(\(?\d+\)?)\s*\)/g;
+
+        let matches = [];
+        let convertedLines = [];
+
+        content.replace(regex, (match, num1, num2) => {
+          matches.push(match);
+          const cleanNum1 = num1.replace(/[()]/g, '');
+          const cleanNum2 = num2.replace(/[()]/g, '');
+          const converted = `BlzGetAbilityExtendedTooltip(${cleanNum1},${cleanNum2})`;
+          convertedLines.push(converted);
+        });
+
+        document.getElementById('originalText').value = matches.join('\n');
+        document.getElementById('convertedText').value = convertedLines.join('\n');
+        convertedContent = content.replace(regex, (match, num1, num2) => {
+          const cleanNum1 = num1.replace(/[()]/g, '');
+          const cleanNum2 = num2.replace(/[()]/g, '');
+          return `BlzGetAbilityExtendedTooltip(${cleanNum1},${cleanNum2})`;
+        });
+      };
+
+      reader.readAsText(file);
+    });
+
+    function downloadConverted() {
+      const blob = new Blob([convertedContent], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'converted_tooltips.txt';
+      link.click();
+    }
+  </script>
+</body>
+</html>
