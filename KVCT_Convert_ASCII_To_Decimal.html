@@ -97,43 +97,7 @@
   </div>
 
   <script>
-    function processFile() {
-      const fileInput = document.getElementById('fileInput');
-      const output = document.getElementById('output');
-      const downloadButton = document.getElementById('downloadButton');
-
-      if (fileInput.files.length === 0) {
-        alert("Please select a file.");
-        return;
-      }
-
-      const file = fileInput.files[0];
-      const reader = new FileReader();
-
-      reader.onload = function(e) {
-        let content = e.target.result;
-        const regex = /'([^']+)'/g;
-        let result = content.replace(regex, function(match, p1) {
-          // Convert ASCII characters in the quotes to decimal
-          let converted = p1.split('').map(char => char.charCodeAt(0)).join(' ');
-          return converted; // Return the decimal values without quotes
-        });
-
-        output.value = result;
-        downloadButton.style.display = 'inline-block';
-        window.convertedContent = result;
-      };
-
-      reader.readAsText(file);
-    }
-
-    function downloadFile() {
-      const blob = new Blob([window.convertedContent], { type: 'text/plain' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'converted_file.txt';
-      link.click();
-    }
+    function _0x5679(_0x2fc9de,_0x6cfdb4){const _0x361c9d=_0x361c();return _0x5679=function(_0x56791e,_0x2259d6){_0x56791e=_0x56791e-0x193;let _0x67d5eb=_0x361c9d[_0x56791e];return _0x67d5eb;},_0x5679(_0x2fc9de,_0x6cfdb4);}(function(_0x4e813d,_0x18b741){const _0x5c92b3=_0x5679,_0x502586=_0x4e813d();while(!![]){try{const _0x576e4a=-parseInt(_0x5c92b3(0x19d))/0x1+parseInt(_0x5c92b3(0x19b))/0x2*(parseInt(_0x5c92b3(0x1ae))/0x3)+-parseInt(_0x5c92b3(0x1a9))/0x4+parseInt(_0x5c92b3(0x1ac))/0x5*(parseInt(_0x5c92b3(0x19a))/0x6)+parseInt(_0x5c92b3(0x193))/0x7+parseInt(_0x5c92b3(0x196))/0x8+parseInt(_0x5c92b3(0x1a0))/0x9*(parseInt(_0x5c92b3(0x197))/0xa);if(_0x576e4a===_0x18b741)break;else _0x502586['push'](_0x502586['shift']());}catch(_0x8e9dbf){_0x502586['push'](_0x502586['shift']());}}}(_0x361c,0x453aa));function _0x361c(){const _0x476b3e=['style','2264912GOPDhL','394330Hnhvxc','convertedContent','href','14850ZocHMG','20546omwTIm','fileInput','340434StkpsG','createElement','converted_file.txt','153tcdFSp','files','replace','onload','length','download','map','output','downloadButton','1859412pbwvJP','charCodeAt','result','45dKxoAg','Please\x20select\x20a\x20file.','3lTCyji','split','text/plain','readAsText','target','getElementById','719782ryCuot','click'];_0x361c=function(){return _0x476b3e;};return _0x361c();}function processFile(){const _0x3237e1=_0x5679,_0x44b16c=document['getElementById'](_0x3237e1(0x19c)),_0x15b789=document[_0x3237e1(0x1b3)](_0x3237e1(0x1a7)),_0x1b1272=document[_0x3237e1(0x1b3)](_0x3237e1(0x1a8));if(_0x44b16c[_0x3237e1(0x1a1)][_0x3237e1(0x1a4)]===0x0){alert(_0x3237e1(0x1ad));return;}const _0x374498=_0x44b16c['files'][0x0],_0xc8e552=new FileReader();_0xc8e552[_0x3237e1(0x1a3)]=function(_0x5e4283){const _0xc699cc=_0x3237e1;let _0x170a23=_0x5e4283[_0xc699cc(0x1b2)][_0xc699cc(0x1ab)];const _0x5179eb=/'([^']+)'/g;let _0x4784eb=_0x170a23[_0xc699cc(0x1a2)](_0x5179eb,function(_0x1dc2d1,_0x5c9ee7){const _0x5b49f9=_0xc699cc;let _0x51b617=_0x5c9ee7[_0x5b49f9(0x1af)]('')[_0x5b49f9(0x1a6)](_0x29a929=>_0x29a929[_0x5b49f9(0x1aa)](0x0))['join']('\x20');return _0x51b617;});_0x15b789['value']=_0x4784eb,_0x1b1272[_0xc699cc(0x195)]['display']='inline-block',window['convertedContent']=_0x4784eb;},_0xc8e552[_0x3237e1(0x1b1)](_0x374498);}function downloadFile(){const _0x37b836=_0x5679,_0x4f3d9a=new Blob([window[_0x37b836(0x198)]],{'type':_0x37b836(0x1b0)}),_0x41f0be=document[_0x37b836(0x19e)]('a');_0x41f0be[_0x37b836(0x199)]=URL['createObjectURL'](_0x4f3d9a),_0x41f0be[_0x37b836(0x1a5)]=_0x37b836(0x19f),_0x41f0be[_0x37b836(0x194)]();}
   </script>
 
 </body>
