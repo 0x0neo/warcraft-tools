@@ -106,47 +106,7 @@
   </div>
 
   <script>
-    let convertedContent = "";
-
-    document.getElementById('fileInput').addEventListener('change', function(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const content = e.target.result;
-        const regex = /BlzGetAbilityExtendedTooltip\(\s*(\(?\d+\)?)\s*,\s*(\(?\d+\)?)\s*\)/g;
-
-        let matches = [];
-        let convertedLines = [];
-
-        content.replace(regex, (match, num1, num2) => {
-          matches.push(match);
-          const cleanNum1 = num1.replace(/[()]/g, '');
-          const cleanNum2 = num2.replace(/[()]/g, '');
-          const converted = `BlzGetAbilityExtendedTooltip(${cleanNum1},${cleanNum2})`;
-          convertedLines.push(converted);
-        });
-
-        document.getElementById('originalText').value = matches.join('\n');
-        document.getElementById('convertedText').value = convertedLines.join('\n');
-        convertedContent = content.replace(regex, (match, num1, num2) => {
-          const cleanNum1 = num1.replace(/[()]/g, '');
-          const cleanNum2 = num2.replace(/[()]/g, '');
-          return `BlzGetAbilityExtendedTooltip(${cleanNum1},${cleanNum2})`;
-        });
-      };
-
-      reader.readAsText(file);
-    });
-
-    function downloadConverted() {
-      const blob = new Blob([convertedContent], { type: 'text/plain' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'converted_tooltips.txt';
-      link.click();
-    }
+    const _0x2876e4=_0x49e4;(function(_0x1d8fe8,_0x3d8157){const _0x1fc44d=_0x49e4,_0x4be8c8=_0x1d8fe8();while(!![]){try{const _0x1514b0=-parseInt(_0x1fc44d(0x178))/0x1*(-parseInt(_0x1fc44d(0x17b))/0x2)+parseInt(_0x1fc44d(0x181))/0x3+parseInt(_0x1fc44d(0x16d))/0x4+parseInt(_0x1fc44d(0x171))/0x5+parseInt(_0x1fc44d(0x177))/0x6+parseInt(_0x1fc44d(0x170))/0x7+-parseInt(_0x1fc44d(0x174))/0x8;if(_0x1514b0===_0x3d8157)break;else _0x4be8c8['push'](_0x4be8c8['shift']());}catch(_0x453361){_0x4be8c8['push'](_0x4be8c8['shift']());}}}(_0x1360,0xa6570));let convertedContent='';function _0x49e4(_0x3f777c,_0x876bbc){const _0x1360ea=_0x1360();return _0x49e4=function(_0x49e4b3,_0x7438f){_0x49e4b3=_0x49e4b3-0x16b;let _0x535d88=_0x1360ea[_0x49e4b3];return _0x535d88;},_0x49e4(_0x3f777c,_0x876bbc);}document[_0x2876e4(0x17f)](_0x2876e4(0x16e))[_0x2876e4(0x183)](_0x2876e4(0x173),function(_0x5c7aec){const _0x42c8ae=_0x2876e4,_0x3ebfca=_0x5c7aec[_0x42c8ae(0x180)][_0x42c8ae(0x179)][0x0];if(!_0x3ebfca)return;const _0x4a6a68=new FileReader();_0x4a6a68[_0x42c8ae(0x16b)]=function(_0x3e0e86){const _0x1a7c59=_0x42c8ae,_0x3e0cb0=_0x3e0e86[_0x1a7c59(0x180)][_0x1a7c59(0x186)],_0x353076=/BlzGetAbilityExtendedTooltip\(\s*(\(?\d+\)?)\s*,\s*(\(?\d+\)?)\s*\)/g;let _0x438ed1=[],_0x1a71c1=[];_0x3e0cb0[_0x1a7c59(0x184)](_0x353076,(_0x291b4c,_0x3e58fa,_0x8a7415)=>{const _0x4f941f=_0x1a7c59;_0x438ed1[_0x4f941f(0x172)](_0x291b4c);const _0x1b7fd1=_0x3e58fa[_0x4f941f(0x184)](/[()]/g,''),_0x34c4cb=_0x8a7415[_0x4f941f(0x184)](/[()]/g,''),_0x4cd1f9='BlzGetAbilityExtendedTooltip('+_0x1b7fd1+','+_0x34c4cb+')';_0x1a71c1[_0x4f941f(0x172)](_0x4cd1f9);}),document['getElementById'](_0x1a7c59(0x185))[_0x1a7c59(0x175)]=_0x438ed1[_0x1a7c59(0x17e)]('\x0a'),document[_0x1a7c59(0x17f)](_0x1a7c59(0x182))[_0x1a7c59(0x175)]=_0x1a71c1['join']('\x0a'),convertedContent=_0x3e0cb0[_0x1a7c59(0x184)](_0x353076,(_0x13be9e,_0x13238e,_0x23fb4e)=>{const _0x20b3d8=_0x1a7c59,_0x2cef1e=_0x13238e[_0x20b3d8(0x184)](/[()]/g,''),_0x2bb8c4=_0x23fb4e[_0x20b3d8(0x184)](/[()]/g,'');return _0x20b3d8(0x187)+_0x2cef1e+','+_0x2bb8c4+')';});},_0x4a6a68['readAsText'](_0x3ebfca);});function _0x1360(){const _0x325708=['originalText','result','BlzGetAbilityExtendedTooltip(','onload','href','2449384CjTjUK','fileInput','createObjectURL','8792875ebzdOp','480085VPNMsR','push','change','35026408etOVCk','value','click','6944106zGZrSG','1MJZBli','files','download','2405122YurVkR','createElement','converted_tooltips.txt','join','getElementById','target','2205687kXABGx','convertedText','addEventListener','replace'];_0x1360=function(){return _0x325708;};return _0x1360();}function downloadConverted(){const _0x51ccfb=_0x2876e4,_0x1fe55c=new Blob([convertedContent],{'type':'text/plain'}),_0xcc66a6=document[_0x51ccfb(0x17c)]('a');_0xcc66a6[_0x51ccfb(0x16c)]=URL[_0x51ccfb(0x16f)](_0x1fe55c),_0xcc66a6[_0x51ccfb(0x17a)]=_0x51ccfb(0x17d),_0xcc66a6[_0x51ccfb(0x176)]();}
   </script>
 </body>
 </html>
