@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Convert Name to Number</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      background-color: #1e1e1e;
+      padding: 30px 40px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+      width: 100%;
+      max-width: 500px;
+      text-align: center;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #00ffc8;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      width: 80%;
+      border: none;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 16px;
+      background-color: #2c2c2c;
+      color: #fff;
+    }
+
+    button {
+      background-color: #00ffc8;
+      color: #121212;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #00c9a7;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 20px;
+      color: #ffd700;
+      word-break: break-word;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>🔡 Chuyển Tên Thành Mã Số</h2>
+    <input type="text" id="nameInput" placeholder="Nhập tên...">
+    <br>
+    <button onclick="convertNameToNumFN()">Chuyển đổi</button>
+    <p>Kết quả: <span id="result"></span></p>
+  </div>
+
+  <script>
+    const JAZ = new Array(76);
+    JAZ[11] = "0";  JAZ[12] = "1";  JAZ[13] = "2";  JAZ[14] = "3";
+    JAZ[15] = "4";  JAZ[16] = "5";  JAZ[17] = "6";  JAZ[18] = "7";
+    JAZ[19] = "8";  JAZ[20] = "9";  JAZ[21] = "A";  JAZ[22] = "B";
+    JAZ[23] = "C";  JAZ[24] = "D";  JAZ[25] = "E";  JAZ[26] = "F";
+    JAZ[27] = "G";  JAZ[28] = "H";  JAZ[29] = "I";  JAZ[30] = "J";
+    JAZ[31] = "K";  JAZ[32] = "L";  JAZ[33] = "M";  JAZ[34] = "N";
+    JAZ[35] = "O";  JAZ[36] = "P";  JAZ[37] = "Q";  JAZ[38] = "R";
+    JAZ[39] = "S";  JAZ[40] = "T";  JAZ[41] = "U";  JAZ[42] = "V";
+    JAZ[43] = "W";  JAZ[44] = "X";  JAZ[45] = "Y";  JAZ[46] = "Z";
+    JAZ[47] = ".";  JAZ[48] = "_";  JAZ[49] = "#";  JAZ[50] = "a";
+    JAZ[51] = "b";  JAZ[52] = "c";  JAZ[53] = "d";  JAZ[54] = "e";
+    JAZ[55] = "f";  JAZ[56] = "g";  JAZ[57] = "h";  JAZ[58] = "i";
+    JAZ[59] = "j";  JAZ[60] = "k";  JAZ[61] = "l";  JAZ[62] = "m";
+    JAZ[63] = "n";  JAZ[64] = "o";  JAZ[65] = "p";  JAZ[66] = "q";
+    JAZ[67] = "r";  JAZ[68] = "s";  JAZ[69] = "t";  JAZ[70] = "u";
+    JAZ[71] = "v";  JAZ[72] = "w";  JAZ[73] = "x";  JAZ[74] = "y";
+    JAZ[75] = "z";
+
+    function convertNameToNumFN() {
+      const Dx = document.getElementById("nameInput").value.trim();
+      let Ti = "";
+
+      for (let E6 = 0; E6 < Dx.length; E6++) {
+        const E2 = Dx.charAt(E6);
+        for (let UC = 11; UC <= 75; UC++) {
+          if (JAZ[UC] === E2) {
+            Ti += UC.toString();
+            break;
+          }
+        }
+      }
+
+      document.getElementById("result").textContent = Ti;
+    }
+  </script>
+</body>
+</html>
