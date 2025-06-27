@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convert List FN</title>
+  <style>
+    /* Nền tối với chữ sáng */
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #121212; /* Nền tối */
+      color: white; /* Chữ sáng */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    h2 {
+      font-size: 2em;
+      color: #00ffcc; /* Màu sáng cho tiêu đề */
+      margin-bottom: 20px;
+    }
+
+    /* Định dạng cho các nút và input */
+    input[type="file"], button {
+      margin: 15px 0;
+      padding: 15px;
+      font-size: 1em;
+      background-color: #333; /* Nền tối cho nút và input */
+      color: white; /* Chữ sáng */
+      border: 2px solid #444; /* Viền nút */
+      border-radius: 5px;
+      width: 300px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    input[type="file"] {
+      width: auto;
+      margin-bottom: 20px;
+    }
+
+    input[type="file"]:hover, button:hover {
+      background-color: #444;
+      border-color: #00ffcc;
+    }
+
+    /* Kết quả hiển thị */
+    #result {
+      margin-top: 30px;
+      padding: 20px;
+      background-color: #222;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 1600px;
+      font-size: 1.1em;
+      line-height: 1.6;
+      color: #00ffcc; /* Màu sáng cho kết quả */
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-y: auto;
+      height: 500px; /* Tăng chiều cao để có thể cuộn và hiển thị nhiều dòng */
+    }
+
+    .download-btn {
+      margin-top: 20px;
+      padding: 15px;
+      font-size: 1em;
+      background-color: #333;
+      color: white;
+      border: 2px solid #444;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .download-btn:hover {
+      background-color: #444;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h2>Upload and Process File</h2>
+  <input type="file" id="fileInput" />
+  <button onclick="processFile()">Process File</button>
+  <button class="download-btn" onclick="downloadResult()">Download Result</button>
+  <div id="result"></div>
+
+  <script>
+    const d6Y = {
+      11: "a", 12: "b", 13: "c", 14: "d", 15: "e", 16: "f", 17: "g", 18: "h", 19: "i",
+      20: "j", 21: "k", 22: "l", 23: "m", 24: "n", 25: "o", 26: "p", 27: "q", 28: "r",
+      29: "s", 30: "t", 31: "u", 32: "v", 33: "w", 34: "x", 35: "y", 36: "z",
+      37: "A", 38: "B", 39: "C", 40: "D", 41: "E", 42: "F", 43: "G", 44: "H",
+      45: "I", 46: "J", 47: "K", 48: "L", 49: "M", 50: "N", 51: "O", 52: "P",
+      53: "Q", 54: "R", 55: "S", 56: "T", 57: "U", 58: "V", 59: "W", 60: "X",
+      61: "Y", 62: "Z", 63: "0", 64: "1", 65: "2", 66: "3", 67: "4", 68: "5",
+      69: "6", 70: "7", 71: "8", 72: "9", 73: ".", 74: "_", 75: "#"
+    };
+
+    function reverseConvert(vR) {
+      let w2 = "";
+      for (let i = 0; i < vR.length; ) {
+        const maybeKey = parseInt(vR.substr(i, 2));
+        if (maybeKey >= 11 && maybeKey <= 75) {
+          w2 += d6Y[maybeKey];
+          i += 2;
+        } else {
+          w2 = "[Invalid vR format]";
+          break;
+        }
+      }
+      return w2;
+    }
+    let allResults = [];
+    function processFile() {
+      const fileInput = document.getElementById("fileInput");
+      const file = fileInput.files[0];
+      
+      if (!file) {
+        alert("Please upload a file.");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const content = event.target.result;
+        const lines = content.split("\n");
+        allResults = [];
+
+        lines.forEach(line => {
+          const match = line.match(/set Wcb\[(\d+)\]="([^"]+)"/);
+          if (match) {
+            const index = match[1];
+            const XXX = match[2];
+            
+            const A2 = XXX.substring(4, 9);
+            const A1 = XXX.substring(10, 15);
+            const A3 = XXX.substring(17);
+            const A4 = XXX.substring(17, 19);
+            const A5 = XXX.substring(11, 13);
+            const A6 = XXX.substring(15, 17);
+            
+            const A3Formatted = A3.match(/.{2}/g).join('-');
+            const pass = A4 + "" + A5 + "" + A6;
+
+            const w2 = reverseConvert(A3);
+            const lengthW2 = w2.length;
+
+            let totalSum = 0;
+            let vipCode = `${lengthW2}-${A1}-${A2}-961624-${A3Formatted}`;
+            const numList = vipCode.split("-");
+            numList.forEach(num => {
+              // Chuyển từng số thành mảng các chữ số, sau đó cộng tất cả các chữ số lại
+              totalSum += num.split('').reduce((sum, digit) => sum + parseInt(digit), 0);
+            });
+            vipCode += `-${totalSum}`;
+
+            allResults.push(`${index}. Wcb(${index}) = "${XXX}"
+            Decode: Wcb(4,9) = ${A1}, Wcb(10,15) = ${A2}, Wcb(17,length) = ${A3Formatted}, PASS = ${pass}, NAME = ${w2}
+            VIPCODE = ${vipCode}\n`);
+          }
+        });
+
+        document.getElementById("result").innerText = allResults.join("");
+      };
+      reader.readAsText(file);
+    }
+     // Tải kết quả dưới dạng file .txt
+    function downloadResult() {
+      const resultText = allResults.join("\n\n");
+
+      const blob = new Blob([resultText], { type: 'text/plain' });
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'processed_result.txt';
+      link.click();
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VIP Code Checker</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+    }
+
+    input, button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 1em;
+    }
+
+    input {
+      width: 300px;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #00ffcc;
+    }
+  </style>
+</head>
+<body>
+  <h2>Decode VIPCODE KVCT</h2>
+  <input type="text" id="vipInput" placeholder="Enter VIP Code">
+  <button onclick="generate()">Generate</button>
+  <div id="result"></div>
+
+  <script>
+    function generate() {
+      const w2 = document.getElementById("vipInput").value.toUpperCase();
+      const WJu = "A1B2C3D45E6F7G809";
+      const d6i = "0123456789-";
+      let bn = new Array(100).fill(0);
+      let d6r = WJu.length;
+      let d67 = -1;
+      let d6s = 1000000;
+      let d6J = "";
+      let HYg = 0;
+
+      let qJ = 0;
+      while (qJ < w2.length) {
+        // Multiply all by d6r
+        for (let WMg = 0; WMg <= HYg; WMg++) {
+          bn[WMg] *= d6r;
+        }
+
+        d67++;
+        if (d67 === 4) {
+          d67 = 0;
+          qJ++;
+        }
+
+        if (qJ >= w2.length) break;
+
+        let w8 = w2[qJ];
+        let WA0 = d6r;
+        while (WA0 > 0) {
+          WA0--;
+          if (WJu[WA0] === w8) break;
+        }
+
+        bn[0] += WA0;
+
+        for (let WMg = 0; WMg <= HYg; WMg++) {
+          let WX6 = Math.floor(bn[WMg] / d6s);
+          bn[WMg] = bn[WMg] % d6s;
+          bn[WMg + 1] += WX6;
+        }
+
+        if (bn[HYg + 1] > 0) HYg++;
+
+        qJ++;
+      }
+
+      while (HYg >= 0) {
+        for (let WMg = HYg; WMg > 0; WMg--) {
+          let WX6 = Math.floor(bn[WMg] / 11);
+          bn[WMg - 1] += (bn[WMg] - WX6 * 11) * d6s;
+          bn[WMg] = WX6;
+        }
+
+        let WX6 = Math.floor(bn[0] / 11);
+        let qJ = bn[0] - WX6 * 11;
+        d6J = d6i[qJ] + d6J;
+        bn[0] = WX6;
+
+        if (bn[HYg] === 0) HYg--;
+      }
+
+      document.getElementById("result").innerText = "d6J = " + d6J;
+    }
+  </script>
+</body>
+</html>
