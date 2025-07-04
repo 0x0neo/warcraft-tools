@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Đếm tổng các chữ số</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+    }
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <h2>Tính tổng các chữ số</h2>
+  <p>Nhập chuỗi số (ví dụ: 1-11-4-21258-...):</p>
+  <input type="text" id="inputString" value="1-11-4-21258-7-743-23-74-65-57-54-67-27-57-64-68-69">
+  <button onclick="calculateSum()">Tính tổng</button>
+  <div id="result"></div>
+
+  <script>
+    function calculateSum() {
+      const input = document.getElementById('inputString').value;
+
+      // Loại bỏ tất cả ký tự không phải số
+      const digitsOnly = input.replace(/[^0-9]/g, '');
+
+      // Cộng tất cả các chữ số
+      let total = 0;
+      for (let digit of digitsOnly) {
+        total += parseInt(digit, 10);
+      }
+
+      // Hiển thị kết quả
+      document.getElementById('result').innerText = `Tổng các chữ số là: ${total}`;
+    }
+  </script>
+</body>
+</html>
